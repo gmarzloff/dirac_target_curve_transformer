@@ -59,13 +59,24 @@ class TargetCurve:
             transform = lambda p: [p[0], p[1] - abs(dB_change)] if (
                         p[0] >= float(bandpass_low_freq) and p[0] <= float(bandpass_high_freq)) else p
         elif operation == Operation.Compress:
-            transform = lambda p: [p[0], p[1] * (1 - dB_change)] if (
+            transform = lambda p: [p[0], p[1] * (100 - dB_change)/100] if (
                         p[0] >= float(bandpass_low_freq) and p[0] <= float(bandpass_high_freq)) else p
         elif operation == Operation.Expand:
-            transform = lambda p: [p[0], p[1] * (1 + dB_change)] if (
+            transform = lambda p: [p[0], p[1] * (100 + dB_change)/100] if (
                         p[0] >= float(bandpass_low_freq) and p[0] <= float(bandpass_high_freq)) else p
         elif operation == Operation.Limit:
             transform = lambda p: [p[0], dB_change if p[1] >= dB_change else p[1]] if (
                 p[0] >= float(bandpass_low_freq) and p[0] <= float(bandpass_high_freq)) else p
         
         self.breakpoints_transformed = [transform(p) for p in self.breakpoints_original]
+
+    def write_transformed(self, target_filename):
+        text = "NAME\n%s\nDEVICENAME\n%s\nBREAKPOINTS\n" % (self.name, self.device_name)
+        for point in self.breakpoints_transformed:
+            text += "%s %s\n" % (str(point[0]), str(point[1]))
+        text += "LOWLIMITHZ\n%s\nHIGHLIMITHZ\n%s\n" % (str(self.low_limit_Hz), str(self.high_limit_Hz))
+        
+        with open(target_filename, 'w') as f:
+            f.write(text)
+            f.close()
+            print("File saved to %s" % target_filename)
