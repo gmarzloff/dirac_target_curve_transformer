@@ -7,6 +7,7 @@ class Operation(Enum):
     Attenuate = 2
     Compress = 3
     Expand = 4
+    Limit = 5
 
 
 class TargetCurve:
@@ -63,6 +64,8 @@ class TargetCurve:
         elif operation == Operation.Expand:
             transform = lambda p: [p[0], p[1] * (1 + dB_change)] if (
                         p[0] >= float(bandpass_low_freq) and p[0] <= float(bandpass_high_freq)) else p
+        elif operation == Operation.Limit:
+            transform = lambda p: [p[0], dB_change if p[1] >= dB_change else p[1]] if (
+                p[0] >= float(bandpass_low_freq) and p[0] <= float(bandpass_high_freq)) else p
         
         self.breakpoints_transformed = [transform(p) for p in self.breakpoints_original]
-        print("Transformed Breakpoints: %s" % self.breakpoints_transformed)
