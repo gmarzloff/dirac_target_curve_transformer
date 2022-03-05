@@ -23,8 +23,8 @@ def main():
     while True:
         choice = pick_menu_options()
         if choice <= 5:
-            low = float(input("Low Frequency cutoff for transformation [0 Hz]:") or 0)
-            high = float(input("High Frequency cutoff for transformation [20 kHz]:") or 20000)
+            low = float(input("Low Frequency cutoff for transformation (Hz) [0 Hz]:") or 0)
+            high = float(input("High Frequency cutoff for transformation (Hz) [20 kHz]:") or 20000)
         
         if choice == Operation.Gain.value:
             value = float(input("Gain by __ dB [0]:"))
