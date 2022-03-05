@@ -74,13 +74,19 @@ def graph():
     x = [point[0] for point in target_curve.breakpoints_original]
     y_original = [point[1] for point in target_curve.breakpoints_original]
     y_transformed = [point[1] for point in target_curve.breakpoints_transformed]
-    plt.plot(x, y_original, marker='o', alpha=0.2, label="Original")
-    plt.plot(x, y_transformed, color='r', marker='*', ms=10, mec='r', mfc='r', label="Transformed")
-    plt.xlabel("Frequency")
+    plt.cla()
+    plt.plot(x, y_original, marker='o', alpha=0.8, color="salmon", label="Original")
+    
+    if len(target_curve.breakpoints_transformed) == len(target_curve.breakpoints_original):
+        plt.plot(x, y_transformed, color='lightblue', marker='o', mec='lightblue', mfc='lightblue', label="Transformed")
+    plt.xlabel("Frequency (Hz)")
     plt.ylabel("dB")
     plt.title("Target Curve")
-    plt.grid(axis='x', which="both", ls="-")
+    plt.grid(axis='x', which="both", ls="-", color=(0.9, 0.9, 0.9, 0.6))
     plt.xscale("log")
+    plt.ylim(-20, 20)
+
+    ax.set_facecolor((0.15, 0.15, 0.15))
     plt.legend()
     plt.show()
 
