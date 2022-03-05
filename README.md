@@ -70,6 +70,6 @@ target_curve.write_transformed('target/filename.targetcurve')
 | parameter | description |
 |---|---|
 | operation | `Operation.Gain`  `Operation.Attenuate` `Operation.Compress` `Operation.Expand` `Operation.Limit`|
-| dB_change | value to add or subtract in `.Gain` or `.Attenuate` modes. Percent change in `.Compress`/`.Expand` modes. Upper limit in `.Limit`.
+| dB_change | value to add in `.Gain` or subtract in `.Attenuate` modes (use positive values for both) Percent change in `.Compress` and `.Expand` modes. Upper limit in `.Limit`.
 | bandpass_low_freq| lowest frequency cutoff in Hz for transformation to have effect |
 | bandpass_high_freq| highest frequency cutoff in Hz for transformation to have effect |
